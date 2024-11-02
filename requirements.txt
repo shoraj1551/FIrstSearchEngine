@@ -1,3 +1,7 @@
-pandas
 numpy
+pandas
+argparse
+socket
+sys
+re
 -e .
