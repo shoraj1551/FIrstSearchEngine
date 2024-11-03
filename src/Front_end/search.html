@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Search Engine Homepage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6f7ff; /* Company color */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            background-image: url('company-banner.png'); /* Company banner */
+            background-repeat: no-repeat;
+            background-position: top center;
+            background-size: cover;
+        }
+        .header-note {
+            background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+            padding: 15px;
+            text-align: center;
+            width: 100%;
+            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .search-container {
+            display: flex;
+            width: 100%;
+            max-width: 600px;
+        }
+        .search-box {
+            flex: 1;
+            padding: 10px;
+            font-size: 18px;
+            border: 2px solid #ccc;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+        }
+        .search-button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #0073e6; /* Company color */
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .search-button:hover {
+            background-color: #005bb5; /* Darker shade of company color */
+        }
+    </style>
+</head>
+<body>
+    <div class="header-note">
+        Welcome! Enter your search term and press the "Search" button to find the information you need.
+    </div>
+    <div class="logo">
+        <img id="logoImage" src="company-logo.png" alt="Company Logo" width="200">
+    </div>
+    <form class="search-container" action = "#" method = "POST">
+        <input type="text" size= "40" name = "query" class="search-box" placeholder="Search the web...">
+        <button type = "submit" class="search-button">Search</button>
+    </form>
+
+    <script>
+        // JavaScript to change the logo dynamically based on the day if needed
+        const logoImage = document.getElementById('logoImage');
+        const dayOfWeek = new Date().getDay(); // Sunday = 0, Monday = 1, ..., Saturday = 6
+
+        // Object mapping days of the week to logo file paths (optional)
+        const logoMap = {
+            0: 'sunday-logo.png',
+            1: 'monday-logo.png',
+            2: 'tuesday-logo.png',
+            3: 'wednesday-logo.png',
+            4: 'thursday-logo.png',
+            5: 'friday-logo.png',
+            6: 'saturday-logo.png'
+        };
+
+        // Uncomment the line below to change the logo based on the day
+        // logoImage.src = logoMap[dayOfWeek] || 'company-logo.png';
+    </script>
+    %RESULT%
+</body>
+</html>

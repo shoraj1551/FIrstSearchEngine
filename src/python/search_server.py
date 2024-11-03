@@ -46,8 +46,8 @@ class SearchServer:
             request = request.split("\r\n")[0]
             request = request.split(" ")[1]
             request = request.split("HTTP")[0]
-            request = request.replace("/", " ")
-            print(f"Request part after GET/ was: {request}")
+            request = request.replace("/", "")
+            print(f"Request part after POST/ was: {request}")
 
             #Handel Requests
             response = self.handle_request(request)
@@ -64,7 +64,9 @@ class SearchServer:
         status_code = "200 OK"
         media_type = "text/plane"
 
-        #check if the request enclose with a query string of the form ?query=
+        #check if the request ends with a query string 
+        # of the form ?query=
+        query =  None
         pos = request.find("?query=")
         if pos != -1:
             query = request[pos + len("?query=")]
@@ -76,14 +78,46 @@ class SearchServer:
 
             print(f"query = {query}")
         
-        print(request)
-        
-        #interpret the request as file name
-        # Try:
-        #     filename = request
-        
+        #interpret the request as file name, read the file if
+        #it exist and return response
+        try:
+            filename = request
+            with open(filename, "r") as file:
+                response = file.read()
+            #set the media type according to suffix of the file
+            if filename.endswith(".html"):
+                media_type = "text/html"
+            elif filename.endswith(".css"):
+                media_type = "text/css"
+        except FileNotFoundError:
+            response = f"file {filename} not found"
+            media_type = "text/plain"
+            status_code = "404 Not found"
 
+        response = response.encode("utf-8")
 
+        #if the page is search.html and there was a query, replace
+        #%RESULT% by result
+        if request == 'search.html':
+            if query is not None:
+                try:
+                    result = eval(query)
+                except Exception:
+                    result = "Invalid expresssion"
+                result_string = (f"<div><p>Result: {result}</p></div>")
+            else:
+                result_string = ""
+            response = response.replace("%RESULT", result_string)
+
+        #compute the headers
+        headers = f"HTTP/1.1 {status_code}\r\n"
+        headers += f"Content-Length: {len(response)}\r\n"
+        headers += f"Content-Type: {media_type}\r\n"
+        headers += "\r\n"
+        headers = headers.encode("utf-8")
+        
+        return headers + response
+        
 
 def main():
     parser = argparse.ArgumentParser()
