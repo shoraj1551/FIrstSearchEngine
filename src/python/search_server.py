@@ -89,6 +89,8 @@ class SearchServer:
                 media_type = "text/html"
             elif filename.endswith(".css"):
                 media_type = "text/css"
+            elif filename.endswith(".svg"):
+                media_type = "image/svg-xml"
         except FileNotFoundError:
             response = f"file {filename} not found"
             media_type = "text/plain"
@@ -122,7 +124,7 @@ class SearchServer:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("port", type= int, help = "port to listen on")
-    args = parser.parse_args()
+    args =parser.parse_args()
     server = SearchServer(args.port)
     server.run()
 
